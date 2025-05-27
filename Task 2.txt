@@ -1,0 +1,29 @@
+//Clear Button Functionality
+
+private void btnClear_Click(object sender, EventArgs e)
+{
+    txtDescription.Clear();
+    txtAmount.Clear();
+    dtpDate.Value = DateTime.Today;
+}
+
+
+//Delete Button Functionality
+private void btnDelete_Click(object sender, EventArgs e)
+{
+    if (lstExpenses.SelectedIndex != -1)
+    {
+        lstExpenses.Items.RemoveAt(lstExpenses.SelectedIndex);
+    }
+    else
+    {
+        MessageBox.Show("Please select an expense to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+}
+
+
+/*3. UI Layout Improvement
+Group all inputs and buttons using a GroupBox
+
+Add Labels like lblDescription, lblAmount, and lblDate for better clarity
+*/
