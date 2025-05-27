@@ -19,14 +19,48 @@ namespace Basic_Expense_Tracker
 
         private void btnAddExpense_Click(object sender, EventArgs e)
         {
-            string description = txtDescription.Text;
-            string amountText = txtAmount.Text;
+            string description = txtDescription.Text.Trim();
+            string amountText = txtAmount.Text.Trim();
             DateTime date = dtpDate.Value;
 
-            string expenseEntry = date.ToShortDateString()+" - "+description+" - "+amountText;
+            if (string.IsNullOrEmpty(description))
+            {
+                MessageBox.Show("Description cannot be empty.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            decimal amount;
+            if (!decimal.TryParse(amountText, out amount) || amount <= 0)
+            {
+                MessageBox.Show("Amount must be a positive number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string expenseEntry = date.ToShortDateString() + " - " + description + " - " + amount;
             lstExpenses.Items.Add(expenseEntry);
-            txtDescription.Text = "";
-            txtAmount.Text = "";
+
+            txtDescription.Clear();
+            txtAmount.Clear();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txtDescription.Clear();
+            txtAmount.Clear();
+            dtpDate.Value = DateTime.Today;
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (lstExpenses.SelectedIndex != -1)
+            {
+                lstExpenses.Items.RemoveAt(lstExpenses.SelectedIndex);
+            }
+            else
+            {
+                MessageBox.Show("Please select an expense to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
 
         }
 
